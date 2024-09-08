@@ -1,7 +1,7 @@
 <template>
     <v-dialog
       v-model="dialog"
-      :max-width="isMobile ? null : 400"
+      :max-width="400"
       :fullscreen="isMobile"
     >
         <v-card>
