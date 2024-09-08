@@ -9,7 +9,7 @@ type State = {
   categories: any | undefined,
   accessItems: any | undefined,
   budget: any | undefined,
-  loadingBudget: Boolean
+  loadingBudget: boolean
 }
 
 export const useBudgetStore = defineStore('budget', {

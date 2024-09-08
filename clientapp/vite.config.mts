@@ -6,7 +6,6 @@ import Layouts from 'vite-plugin-vue-layouts'
 import Vue from '@vitejs/plugin-vue'
 import VueRouter from 'unplugin-vue-router/vite'
 import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
-import react from '@vitejs/plugin-react'
 
 // Utilities
 import { defineConfig } from 'vite'
@@ -48,7 +47,6 @@ export default defineConfig({
       },
       vueTemplate: true,
     }),
-    react()
   ],
   define: { 'process.env': {} },
   resolve: {
