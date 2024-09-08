@@ -19,7 +19,14 @@
                     </v-avatar>
                 </template>
                 <template v-slot:subtitle>
-                    <v-skeleton-loader v-if="store.loadingBudget" class="bg-transparent" type="text"></v-skeleton-loader>
+                    <v-progress-linear
+                      v-if="store.loadingBudget"
+                      color="green-darken-4"
+                      class="mt-2 mb-1"
+                      height="6"
+                      indeterminate
+                      rounded
+                    ></v-progress-linear>
                     <span v-else>{{ store.budget?.budgetName }}</span>
                 </template>
             </v-list-item>
@@ -28,8 +35,24 @@
         <v-divider></v-divider>
 
         <v-list density="compact" nav>
-            <v-list-item prepend-icon="mdi-chart-pie" title="Categories" value="edit" to="edit"></v-list-item>
-            <v-list-item prepend-icon="mdi-credit-card-outline" title="Transactions" value="transactions" to="transactions"></v-list-item>
+            <v-list-item prepend-icon="mdi-chart-pie" title="Estimate" value="edit" to="edit"></v-list-item>
+            <v-list-item prepend-icon="mdi-credit-card-outline" title="Transactions" value="transactions" to="transactions">
+              <template v-slot:append>
+                <v-badge
+                  color="error"
+                  :content="transactionCount"
+                  inline
+                ></v-badge>
+              </template>
+            </v-list-item>
+            <v-list-item prepend-icon="mdi-credit-card-off-outline" title="Exemptions" value="exemptions" to="exemptions">
+              <template v-slot:append>
+                <v-badge
+                  :content="excludedCount"
+                  inline
+                ></v-badge>
+              </template>
+            </v-list-item>
             <v-list-item prepend-icon="mdi-bank" title="Accounts" value="accounts" to="accounts"></v-list-item>
         </v-list>
         
@@ -53,17 +76,6 @@
     
     <v-sheet color="grey-lighten-4" class="h-100">
         <v-container fluid>
-          <!-- <v-alert
-            color="warning"
-            variant="outlined"
-            class="mb-2"
-            prominent
-            closable
-            density="compact"
-          >
-            <v-icon>mdi-information</v-icon>
-            Plaid sandbox mode is enabled. All linked accounts are for testing purposes only. 
-          </v-alert> -->
           <router-view />
         </v-container>
     </v-sheet>
@@ -103,6 +115,9 @@ const drawer = ref(true)
 const rail = ref(true)
 
 const isMobile = computed(() => mobile.value);
+
+const transactionCount = computed(() => store.budget?.transactions?.filter((c: any) => c.hasTransactionCategory)?.length ?? 0)
+const excludedCount = computed(() => store.budget?.excludedTransactions?.length ?? 0)
 
 onMounted(async () => {
     rail.value = isMobile.value

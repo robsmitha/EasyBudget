@@ -2,13 +2,10 @@
     
     <v-row>
         <v-col>
-            <div class="text-h5">
-                Your Budgets
-            </div>
-            <span class="text-grey-darken-1 font-weight-thin">
-                <span v-if="!$vuetify.display.mobile">Manage monthly budgets for linked accounts. </span>
-                Powered by Plaid.
-            </span>
+            <ContentHeader
+                title="Your Budgets"
+                subtitle="Manage monthly budgets for linked accounts."
+            />
         </v-col>
         <v-col class="text-right">
             <v-btn variant="tonal" color="green-darken-4" @click="dialog = true" :icon="$vuetify.display.mobile">
@@ -60,16 +57,10 @@
         </v-col>
     </v-row>
     
-    <v-row>
-        <v-col>
-            <div class="text-h5">
-                <span>Past Budgets</span>
-            </div>
-            <span class="text-grey-darken-1 font-weight-thin">
-                Review past spending
-            </span>
-        </v-col>
-    </v-row>
+    <ContentHeader
+        title="Past Budgets"
+        subtitle="Review past spending"
+    />
 
     <v-row v-if="loading" class="mb-3">
         <v-col v-for="i in 2" :key="`${i}loading`" cols="12" sm="4">

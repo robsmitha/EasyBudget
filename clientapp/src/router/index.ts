@@ -11,6 +11,7 @@ import budget from '@/pages/budget.vue'
 import Transactions from '@/components/Financial/Transactions.vue'
 import EditBudget from '@/components/Financial/EditBudget.vue'
 import BudgetAccounts from '@/components/Financial/BudgetAccounts.vue'
+import Exemptions from '@/components/Financial/Exemptions.vue'
 
 const routes = [
   {
@@ -35,6 +36,12 @@ const routes = [
         path: 'accounts',
         name: 'accounts',
         component: BudgetAccounts,
+        props: true,
+      },
+      {
+        path: 'exemptions',
+        name: 'exemptions',
+        component: Exemptions,
         props: true,
       }
     ]

@@ -1,12 +1,24 @@
 <template>
-    <v-skeleton-loader v-if="store.loadingBudget" type="table-tfoot, list-item@3" class="bg-transparent"></v-skeleton-loader>
+    <v-template v-if="store.loadingBudget">
+        <v-skeleton-loader type="text, table-tfoot, list-item" class="bg-transparent"></v-skeleton-loader>
+        <v-row>
+            <v-col v-for="i in 5" :key="`${i}loading`" cols="12" sm="3">
+                <v-skeleton-loader
+                class="mx-auto border"
+                type="paragraph, text, text"
+                boilerplate
+                ></v-skeleton-loader>
+            </v-col>
+        </v-row>
+    </v-template>
+    
     <template v-else>
         <v-row>
             <v-col>
-                <span class="text-caption text-grey-darken-1 d-block">
-                    {{ store.budget?.dateRange }}
-                </span>
-                <span class="text-h4 d-block">{{ store.budget?.budgetName }}</span>
+                <ContentHeader
+                    :title="store.budget?.budgetName"
+                    :overline="store.budget?.dateRange"
+                />
             </v-col>
             <v-col cols="auto" class="text-right">
                 <v-btn variant="tonal" color="green-darken-4" @click="saveBudgetDialog = true" :icon="$vuetify.display.mobile">
@@ -53,7 +65,7 @@
                     <v-card-text class="pt-0">
                         <v-progress-linear
                             bg-color="grey-lighten-1"
-                            color="grey-darken-1"
+                            :color="c.totalPercent <= 100 ? 'grey-darken-1' : 'red-darken-2'"
                             :model-value="c.totalPercent"
                         ></v-progress-linear>
                     </v-card-text>

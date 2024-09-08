@@ -36,6 +36,43 @@ export const useBudgetStore = defineStore('budget', {
         const response = await budgetService.getBudget(budgetId)
         this.budget = response.data
         this.loadingBudget = false
-    }
+    },
+    async setTransactionsCategory(budgetId: number, categoryId: number, transactions: any){
+      this.loadingBudget = true
+      const data = transactions?.map((t: any) => {
+          return {
+              transactionId: t.transaction_id,
+              financialCategoryId: categoryId,
+              budgetId: budgetId
+          }
+      })
+      await budgetService.bulkUpdateTransactionCategory(data);
+      this.loadingBudget = false
+    },
+    async restoreTransactions(budgetId: number, t: any) {
+      this.loadingBudget = true
+      await budgetService.setRestoredTransaction({
+          transactionId: t.transaction_id,
+          budgetId: budgetId
+      })
+      this.loadingBudget = false
+    },
+    async excludeTransactions(budgetId: number, t: any) {
+      this.loadingBudget = true
+      await budgetService.setExcludedTransaction({
+          transactionId: t.transaction_id,
+          budgetId: budgetId
+      })
+      this.loadingBudget = false
+    },
+    async updateBudgetCategoryEstimate(budgetId: number, categoryName: string, estimate: number){
+        this.loadingBudget = true
+        await budgetService.updateBudgetCategoryEstimate({
+          estimate: estimate,
+          financialCategoryName: categoryName,
+          budgetId: budgetId
+        })
+        this.loadingBudget = false
+    },
   }
 })

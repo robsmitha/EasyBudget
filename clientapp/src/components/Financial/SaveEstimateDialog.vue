@@ -79,12 +79,7 @@ watch(() => props.categoryEstimate, (newVal) => {
 })
 
 async function saveEstimate() {
-
-    await budgetService.updateBudgetCategoryEstimate({
-      estimate: Number(estimate.value),
-      financialCategoryName: props.categoryName,
-      budgetId: Number(props.budgetId)
-    })
+    await store.updateBudgetCategoryEstimate(Number(props.budgetId), props.categoryName, Number(estimate.value))
 
     emit('estimate-saved')
 
