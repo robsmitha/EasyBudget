@@ -58,13 +58,13 @@ function loadPlaidScript() : Promise<void> {
 }
 
 function initializePlaidLink(){
-    if (window.Plaid){
-        plaidLink.value = window.Plaid.create({
+    if ((window as any).Plaid){
+        plaidLink.value =(window as any).Plaid.create({
             token: linkToken.value,
-            onSuccess: (public_token, metadata) => { exchangePublicToken(public_token) },
+            onSuccess: (public_token: string, metadata: any) => { exchangePublicToken(public_token) },
             onLoad: () => {},
-            onExit: (err, metadata) => {},
-            onEvent: (eventName, metadata) => {},
+            onExit: (err: any, metadata: any) => {},
+            onEvent: (eventName: string, metadata: any) => {},
         })
     }
     
